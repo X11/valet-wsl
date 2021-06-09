@@ -8,9 +8,9 @@ define('VALET_HOME_PATH', posix_getpwuid(fileowner(__FILE__))['dir'] . '/.valet'
 define('VALET_STATIC_PREFIX', '41c270e4-5535-4daa-b23e-c269744c2f45');
 
 if (!function_exists('show_valet_404')) {
-/**
- * Show the Valet 404 "Not Found" page.
- */
+    /**
+     * Show the Valet 404 "Not Found" page.
+     */
     function show_valet_404()
     {
         http_response_code(404);
@@ -20,11 +20,11 @@ if (!function_exists('show_valet_404')) {
 }
 
 if (!function_exists('valet_support_xip_io')) {
-/**
- * @param $domain string Domain to filter
- *
- * @return string Filtered domain (without xip.io feature)
- */
+    /**
+     * @param $domain string Domain to filter
+     *
+     * @return string Filtered domain (without xip.io feature)
+     */
     function valet_support_xip_io($domain)
     {
         if (substr($domain, -7) === '.xip.io') {
@@ -44,12 +44,12 @@ if (!function_exists('valet_support_xip_io')) {
 }
 
 if (!function_exists('valet_path_to_slug')) {
-/**
- * Convert absolute path to slug.
- *
- * @param string $path
- * @return string Slug version of last folder name
- */
+    /**
+     * Convert absolute path to slug.
+     *
+     * @param string $path
+     * @return string Slug version of last folder name
+     */
     function valet_path_to_slug($path)
     {
         $replace = [
@@ -116,7 +116,7 @@ if (!function_exists('valet_path_to_slug')) {
     }
 }
 if (!function_exists('valet_default_site_path')) {
-/*
+    /*
  * @param array $config Valet configuration array
  *
  * @return string|null If set, default site path for uncaught urls
@@ -135,7 +135,8 @@ if (!function_exists('valet_default_site_path')) {
  * Load the Valet configuration.
  */
 $valetConfig = json_decode(
-    file_get_contents(VALET_HOME_PATH . '/config.json'), true
+    file_get_contents(VALET_HOME_PATH . '/config.json'),
+    true
 );
 
 /**
@@ -146,7 +147,7 @@ $uri = rawurldecode(
 );
 
 $siteName = basename(
-// Filter host to support xip.io feature
+    // Filter host to support xip.io feature
     valet_support_xip_io(explode(':', strtolower($_SERVER['HTTP_HOST']))[0]),
     '.' . $valetConfig['domain']
 );
@@ -162,8 +163,8 @@ $valetSitePath = null;
 
 foreach ($valetConfig['paths'] as $path) {
     $domain = ($pos = strrpos($siteName, '.')) !== false
-    ? substr($siteName, $pos + 1)
-    : null;
+        ? substr($siteName, $pos + 1)
+        : null;
 
     foreach (glob($path . '/*', GLOB_ONLYDIR) as $dirPath) {
         $slug = valet_path_to_slug($dirPath);
@@ -220,7 +221,9 @@ if ($uri !== '/' && !$isPhpFile && $staticFilePath = $valetDriver->isStaticFile(
  * Attempt to dispatch to a front controller.
  */
 $frontControllerPath = $valetDriver->frontControllerPath(
-    $valetSitePath, $siteName, $uri
+    $valetSitePath,
+    $siteName,
+    $uri
 );
 
 if (!$frontControllerPath) {

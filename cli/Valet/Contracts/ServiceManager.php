@@ -32,7 +32,7 @@ interface ServiceManager
      * Status the given services.
      *
      * @param
-     * @return void
+     * @return string
      */
     public function status($services);
 
@@ -42,4 +42,13 @@ interface ServiceManager
      * @return bool
      */
     public function isAvailable();
+    
+    /**
+     * Status of the given services.
+     *
+     * @param mixed $services Service name
+     *
+     * @return void
+     */
+    public function printStatus($services);
 }

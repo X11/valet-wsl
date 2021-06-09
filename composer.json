@@ -1,7 +1,7 @@
 {
-    "name": "cpriego/valet-linux",
-    "description": "A more enjoyable local development experience for Linux.",
-    "keywords": ["laravel", "zonda", "wwdhhd", "ubuntu", "fedora", "arch", "linux", "valet"],
+    "name": "x11/valet-wsl",
+    "description": "A more enjoyable local development experience for WSL.",
+    "keywords": ["laravel", "wsl", "linux", "valet"],
     "license": "MIT",
     "authors": [
         {

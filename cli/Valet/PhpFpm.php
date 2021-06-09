@@ -41,7 +41,6 @@ class PhpFpm
     {
         if (!$this->pm->installed("php{$this->version}-fpm")) {
             $this->pm->ensureInstalled("php{$this->version}-fpm");
-            $this->sm->enable($this->fpmServiceName());
         }
 
         $this->files->ensureDirExists('/var/log', user());
@@ -82,7 +81,7 @@ class PhpFpm
 
         $this->stop();
         info('Disabling php' . $this->version . '-fpm...');
-        $this->sm->disable($this->fpmServiceName());
+        // $this->sm->disable($this->fpmServiceName());
 
         if (!isset($version) || strtolower($version) === 'default') {
             $this->version = $this->getVersion(true);
@@ -97,10 +96,7 @@ class PhpFpm
             $exception = $e;
         }
 
-        if ($this->sm->disabled($this->fpmServiceName())) {
-            info('Enabling php' . $this->version . '-fpm...');
-            $this->sm->enable($this->fpmServiceName());
-        }
+        $this->start();
 
         if ($this->version !== $this->getVersion(true)) {
             $this->files->putAsUser(VALET_HOME_PATH . '/use_php_version', $this->version);
@@ -149,6 +145,16 @@ class PhpFpm
             '/etc/systemd/system/php-fpm.service.d/valet.conf',
             $this->files->get(__DIR__ . '/../stubs/php-fpm.service.d/valet.conf')
         );
+    }
+
+    /**
+     * Start the PHP FPM process.
+     *
+     * @return void
+     */
+    public function start()
+    {
+        $this->sm->start($this->fpmServiceName());
     }
 
     /**

@@ -31,13 +31,12 @@ Valet::environmentSetup();
  * Allow Valet to be run more conveniently by allowing the Node proxy to run password-less sudo.
  */
 $app->command('install [--ignore-selinux]', function ($ignoreSELinux) {
-    passthru(dirname(__FILE__) . '/scripts/update.sh'); // Clean up cruft
+    // passthru(dirname(__FILE__) . '/scripts/update.sh'); // Clean up cruft
 
     Requirements::setIgnoreSELinux($ignoreSELinux)->check();
     Configuration::install();
     Nginx::install();
     PhpFpm::install();
-    DnsMasq::install(Configuration::read()['domain']);
     Nginx::restart();
     Valet::symlinkToUsersBin();
 
@@ -304,8 +303,8 @@ if (is_dir(VALET_HOME_PATH)) {
             passthru($script);
         } else {
             warning('There is a new release of Valet Linux');
-            warning('Updating now...');
-            passthru($script . ' update');
+            // warning('Updating now...');
+            // passthru($script . ' update');
         }
     })->descriptions('Update Valet Linux and clean up cruft');
 

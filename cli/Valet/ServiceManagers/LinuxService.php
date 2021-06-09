@@ -106,7 +106,7 @@ class LinuxService implements ServiceManager
      *
      * @param mixed $service Service to get status from
      *
-     * @return void
+     * @return string
      */
     public function status($service)
     {
